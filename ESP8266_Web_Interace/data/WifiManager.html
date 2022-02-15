@@ -6,7 +6,7 @@
     <meta charset="UTF-8" />
     <meta name="author" content="Dynamic Bineuro" />
     <meta name="viewport" content="width-device, initial-scale=1.0" />
-    <link rel="stylesheet" href="pallete.css">
+    <link rel="stylesheet" href="/pallete.css">
     <title>LoveCube Login Page</title>
 </head>
 
@@ -19,12 +19,14 @@
     <div class="Login">
         <input type="text" id="SSID" placeholder="WiFi Name"></input><br>
         <input type="password" id="PASS" placeholder="Password"></input><br><br>
-        <a href="index.html">
-            <button id="Submit">
-                Submit
+            <script src="/WifiManager.js"></script>    
+            <button id="Submit"onclick=sendWifi()>
+                <a>
+                    <span class="button__text">
+                    Submit
+                </span>
+                </a>
             </button>
-            <script src="WifiManager.js"></script>
-        </a>
     </div>
 </body>
 
