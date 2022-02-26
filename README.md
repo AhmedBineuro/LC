@@ -5,6 +5,7 @@ This is the simplest version of the messaging network using two ESP8266 nodes, o
 - [] Create a captive portal to connect to wifi without hardcoding
 - [] Multiple node system
 - [] Using a webpage to send the messaging on each ESP8266 LC node
+- [X] Simple ID system (no library)
 - [] Server side dictionary to assign the messages to the correct node ID
 - [] Ability to upload, send and display images
 - [] Ability to add new nodes without hardcoding
