@@ -5,15 +5,16 @@
 #include <ArduinoJson.h>
 
 //Define ssid and password to connect
-#define ssid "YOUR SSID" 
-#define pass "YOUR PASSWORD"
+#define ssid "ENTER YOUR SSID" 
+#define pass "ENTER YOUR PASSWORD"
 //setting up static IP
-IPAddress local_IP(192,168,1,188);//ENter any IP you want
+IPAddress local_IP(192,168,1,188);//Enter any IP you want
 IPAddress gateway(_,_,_,_);//Use your router's gateway instead of the underscores
 IPAddress subnet(255,255,255,0);
 //JSON object holding ID and msg
 JsonObject jsonPkg;
-String Message;
+const int arraySize=20;
+String Message[arraySize];
 int ID;
 ESP8266WebServer server(80);//Set up server at port 80 for http connection 
 
@@ -70,14 +71,18 @@ void SendMessage()
  DynamicJsonDocument buff(512);
  deserializeJson(buff,JSONpacket);
  jsonPkg= buff.as<JsonObject>();
- //
+ ID=jsonPkg["id"].as<int>();
+ if(ID>=arraySize)
+    message+=" Index not available";
+ else
+ {
+    Message[ID]=jsonPkg["msg"].as<String>();
+    message=jsonPkg["msg"].as<String>();
+    Serial.println(message);
+ }
  //Send back the comfirmation back to the client
   server.send(200, "text/plain", message);
-  ID=jsonPkg["id"].as<int>();
-  Message=jsonPkg["msg"].as<String>();
-  message=jsonPkg["msg"].as<String>();
   Serial.println(ID);
-  Serial.println(message);
 }
 //communicate by using HTTP POST method
 void fetchMessage()
@@ -97,8 +102,11 @@ void fetchMessage()
  deserializeJson(buff,JSONpacket);
  jsonPkg= buff.as<JsonObject>();
  //Send back the comfirmation back to the client
-  server.send(200, "text/plain", Message);
   ID=jsonPkg["id"].as<int>();
+  if(ID<arraySize)
+  {
+    server.send(200, "text/plain", Message[ID]);
+    Serial.println(Message[ID]);
+  }
   Serial.println(ID);
-  Serial.println(Message);
 }
